@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+    <meta name="google-signin-client_id" content="925927241615-co4f9t9tgmvr8t84a7m06najfaesb13j.apps.googleusercontent.com">
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- socket.io adds a path to its client-side js that is not in public -->
+    <script src = '/socket.io/socket.io.js'></script>
+    <script src = '/javascripts/clientSocket.js'></script>
+    <script src ='/javascripts/youtubeAPI.js'></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    
+
+    <body>
+        
+        <p>There are currently <span id="numUsers">no</span> users </p>
+        <div id='player'></div>
+
+        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+
+        <script>
+                function onSignIn(googleUser) {
+                  // Useful data for your client-side scripts:
+                  var profile = googleUser.getBasicProfile();
+                  console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                  console.log('Full Name: ' + profile.getName());
+                  console.log('Given Name: ' + profile.getGivenName());
+                  console.log('Family Name: ' + profile.getFamilyName());
+                  console.log("Image URL: " + profile.getImageUrl());
+                  console.log("Email: " + profile.getEmail());
+          
+                  // The ID token you need to pass to your backend:
+                  var id_token = googleUser.getAuthResponse().id_token;
+                  console.log("ID Token: " + id_token);
+                };
+        </script>
+
+    </body>
+</html>

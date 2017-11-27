@@ -34,7 +34,7 @@ function onYouTubeIframeAPIReady() {
         videoID: 'w0V-LGaqJcs',
         events: {
             'onReady': onPlayerReady,
-            // 'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange
         }
     });
 }
@@ -49,10 +49,6 @@ var done = false;
 
 function onPlayerStateChange(event) {
     console.log('player state changed')
-    if (event.data == YT.PlayerState.PLAYING && !done) {
-        setTimeout(stopVideo,6000);
-        done = true
-    }
 }
 
 function stopVideo() {

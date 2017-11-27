@@ -21,6 +21,7 @@
     "nodemon": "^1.12.1",
     "socket.io": "^2.0.4",
     "sockets": "^0.4.2",
+    "superagent": "^3.8.1",
     "webpack": "^3.8.1"
   }
 }

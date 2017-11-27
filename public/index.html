@@ -6,9 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type:'text/css' href="/stylesheets/jquery-ui.min.css">
+    <link rel="stylesheet" type:"text/css" href="/stylesheets/chatbox.css">
+    
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src='/javascripts/jquery-ui.min.js'></script>
+   
     <!-- socket.io adds a path to its client-side js that is not in public -->
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script src="/javascripts/chatbox.js"></script>
     <script src ='/javascripts/youtubeAPI.js'></script>
     <script src = '/socket.io/socket.io.js'></script>
     <script src = '/javascripts/clientSocket.js'></script>
@@ -50,7 +56,7 @@
         
         <div class="tile is-ancestor">
             
-            <div class="tile is-7 is-vertical">
+            <div class="tile is-7 is-vertical is-parent">
                     <p>There are currently <span id="numUsers">no</span> users </p>
                 
                 <div class="tile">
@@ -61,13 +67,13 @@
 
                 </div>
 
-                <div class="tile">
-                        <div id="buttons">
-                                <label> <input id="query" value='cats' type="text"/><button id="search-button" disabled onclick="search()">Search</button></label>
-                        </div>
+                <div class="tile is-child">
+                    <div id="buttons">
+                            <label> <input id="query" value='cats' type="text"/><button id="search-button" disabled onclick="search()">Search</button></label>
+                    </div>
                 </div>
 
-                <div class"tile">
+                <div class"tile is-child">
                         <div id="search-container"></div>
                         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
                         <script src="/javascripts/auth.js"></script>
@@ -80,22 +86,52 @@
 
             </div>
                 
-            <div class="tile is-5 is-vertical">
-                <div class="tile">
-                    Chatbox
-                </div>
-
-                <div class="tile">
-                    <div class="field">
-                            <label class="label">Type a message here:</label>
-                            <div class="control">
-                                <textarea class="input" placeholder="Type a message here..."></textarea>
-                            </div>
-                        </div>
+            <div class="tile is-5 is-vertical is-parent">
+                
+                <div class="tile is-child">
+      
                         
-                        <div class="control">
-                            <button class="button is-primary">Send</button>
+                    
+                    <div class="index_reload">
+                        <!--index_reload-->
+                        <div id="chat_area">
+                            <!--chat_box-->
+                            <div class="chat_box main_chat2 hide_wrap_box" id="chat_id">
+                            <!--chat_box-->
+                                <div class="user_box">
+                                <div class="name open_chat2 left">Chat</div>
+                                <div class="closed2 right" id="icon">^ &nbsp;</div>
+                                <div class="clear"></div>
+                            </div>
+                            
+                            <div class="wrap_box2" style="display:none">
+                                <!--wrap_box-->
+                                <div class="message_content">
+                                    <div class="field">
+                                        <label class="label">Type a message here:</label>
+                                        <div class="control">
+                                            <textarea class="input" placeholder="Type a message here..."></textarea>
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="control">
+                                        <button class="button is-primary">Send</button>
+                                    </div>
+                                </div>
+                                                                          
+                                </div>
+                                <!--wrap_box-->
+                                </div>
+                                <!--chat_box-->
                         </div>
+                  
+                    </div>
+                    <!--index_reload-->
+                </div>
+               
+
+                <div class="tile is-child">
+                    
                 </div>
 
 
@@ -110,9 +146,5 @@
                 
         </div>
     
-        
-
-
-
     </body>
 </html>

@@ -5,6 +5,7 @@ exports.init = function(io) {
     // When a new connection is initiated
         io.sockets.on('connection', function(socket){
             ++ currentUsers;
+            
             // Send ('emit a 'user_connected' event back to the socket that just connected.)
             socket.emit('users_connected', {number: currentUsers});
 

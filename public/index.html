@@ -1,37 +1,93 @@
 <!DOCTYPE HTML>
 <html>
+    <meta charset="utf=8">
+    <title>VidShare</title>
     <meta name="google-signin-client_id" content="925927241615-co4f9t9tgmvr8t84a7m06najfaesb13j.apps.googleusercontent.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- socket.io adds a path to its client-side js that is not in public -->
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script src ='/javascripts/youtubeAPI.js'></script>
     <script src = '/socket.io/socket.io.js'></script>
     <script src = '/javascripts/clientSocket.js'></script>
-    <script src ='/javascripts/youtubeAPI.js'></script>
+    
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     
 
     <body>
-        
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://bulma.io">
+                <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+                </a>
+                
+                <button class="button navbar-burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-start">
+
+                    <a class="navbar-item">
+                        Hi
+                    </a>
+
+                </div>
+
+                <div class="navbar-end">
+
+                </div>
+
+
+            </div>
+        </nav>
         <p>There are currently <span id="numUsers">no</span> users </p>
-        <div id='player'></div>
+        
+        <div class="columns">
+            <div class="column is-three-fifths">
+                
+                <iframe id="existing-iframe-example"
+                    width="640" height="360"
+                    src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1">
+                </iframe>
+                
 
-        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    
 
-        <script>
-                function onSignIn(googleUser) {
-                  // Useful data for your client-side scripts:
-                  var profile = googleUser.getBasicProfile();
-                  console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-                  console.log('Full Name: ' + profile.getName());
-                  console.log('Given Name: ' + profile.getGivenName());
-                  console.log('Family Name: ' + profile.getFamilyName());
-                  console.log("Image URL: " + profile.getImageUrl());
-                  console.log("Email: " + profile.getEmail());
-          
-                  // The ID token you need to pass to your backend:
-                  var id_token = googleUser.getAuthResponse().id_token;
-                  console.log("ID Token: " + id_token);
-                };
-        </script>
+
+                <div id="buttons">
+                        <label> <input id="query" value='cats' type="text"/><button id="search-button" disabled onclick="search()">Search</button></label>
+                    </div>
+                    
+                    <div id="search-container"></div>
+                    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+                    <script src="/javascripts/auth.js"></script>
+                    <script src="/javascripts/search.js"></script>
+                    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+                    
+                
+                    
+                        
+            
+                <div class="g-signin2" id="login-link" data-onsuccess="onSignIn" data-theme="dark"></div>
+
+            </div>
+
+            <div class="column">
+                Chatbox
+            </div>
+            
+                
+                
+        </div>
+
+        
+
+
 
     </body>
 </html>

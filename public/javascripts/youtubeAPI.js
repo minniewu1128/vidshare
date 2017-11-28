@@ -21,7 +21,7 @@ var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 
 var firstScriptTag = document.getElementsByTagName('script')[0];
-console.log(firstScriptTag)
+
 firstScriptTag.parentNode.insertBefore(tag,firstScriptTag);
 
 // 3. This function creates and <iframe> and YouTube player after API code downloads

@@ -24,8 +24,10 @@ var OAUTH2_CLIENT_ID = '925927241615-co4f9t9tgmvr8t84a7m06najfaesb13j.apps.googl
 
 // scope to view Youtube account
 var OAUTH2_SCOPES = [
-  'https://www.googleapis.com/auth/youtube'
+  'https://www.googleapis.com/auth/youtube.readonly'
 ];
+
+
 
 
 // Upon loading, the Google APIs JS client automatically invokes this callback.

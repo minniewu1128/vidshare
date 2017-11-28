@@ -2,20 +2,6 @@
 // OAuth clientID: 925927241615-co4f9t9tgmvr8t84a7m06najfaesb13j.apps.googleusercontent.com"
 // client secret: LghV_KQPC505TOJiPxph3-4y
 
-function onSignIn(googleUser) {
-    // Useful data for your client-side scripts:
-    var profile = googleUser.getBasicProfile();
-    // console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-    // console.log('Full Name: ' + profile.getName());
-    // console.log('Given Name: ' + profile.getGivenName());
-    // console.log('Family Name: ' + profile.getFamilyName());
-    // console.log("Image URL: " + profile.getImageUrl());
-    // console.log("Email: " + profile.getEmail());
-
-    // The ID token you need to pass to your backend:
-    var id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
-  };
 
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -28,10 +14,11 @@ firstScriptTag.parentNode.insertBefore(tag,firstScriptTag);
 var player;
 
 function onYouTubeIframeAPIReady() {
+    console.log('youtube iframe ready')
     player = new YT.Player('player', {
         height: '390',
         width: '640',
-        videoID: 'w0V-LGaqJcs',
+        videoID: 'MP4HkwiYs0E',
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange

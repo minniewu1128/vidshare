@@ -14,6 +14,12 @@ exports.init = function(io) {
             */
             socket.broadcast.emit('users_connected', {number: currentUsers});
 
+
+            socket.on('message', function(data){
+                console.log('data.message', data.message)
+                socket.emit('message', data);
+                socket.broadcast.emit('message', data)
+            })
             // When this socket is disconnected, decrement numberof users and emit an event to all other sockets.
             socket.on('disconnect', function(){
                 -- currentUsers;

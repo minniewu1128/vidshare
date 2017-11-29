@@ -1,11 +1,48 @@
-<div class="field">
-    <label class="label">Search for a Video:</label>
-    <div class="control">
-      <input class="input" id='video-search-bar'type="text" placeholder="">
+<nav class="panel">
+    <p class="panel-heading">
+      Video Menu
+    </p>
+    <div class="panel-block">
+      <p class="control has-icons-left">
+        
+        <input class="input is-small" id="video-search-bar" type="text" placeholder="search">
+        <span class="icon is-small is-left">
+          <i class="fa fa-search"></i>
+        </span>
+      </p>
+      <button class="button is-link is-small is-outlined" id="video-search">
+          Search
+      </button>
     </div>
-</div>
+    <p class="panel-tabs">
+      <a class="is-active tab" data-tab="search-tab">Search</a>
+      <a class='tab' data-tab="standby-tab">Standby</a>
+      <a class='tab' data-tab="favorites-tab">Favorites</a>
+    </p>
+    
+    <!-- stuff on the search tab -->
 
-<div class="control">
-    <button class="button is-primary" id="video-search">Search</button>
-</div>
-  
+
+
+
+    <!-- stuff on the standby-tab -->
+    <a class="panel-block tab-content" id="standby-tab">
+      <!-- <span class="panel-icon">
+        <i class="fa fa-book"></i>
+      </span>
+      Standby Playlist -->
+      <!-- <table class="table is-fullwidth is-hoverable">
+        <thead>
+          <th>Title</th>
+          <th>Title</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>hello</td>
+            <td>hello</td>
+          </tr>
+        </tbody>
+      </table>
+    </a>
+     -->
+  </nav>

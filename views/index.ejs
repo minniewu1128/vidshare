@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type:'text/css' href="/stylesheets/jquery-ui.min.css">
     <link rel="stylesheet" type:"text/css" href="/stylesheets/chatbox.css">
-    
+    <link rel="stylesheet" type:"text/css" href="/stylesheets/search.css">
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src='/javascripts/jquery-ui.min.js'></script>
    
@@ -81,7 +81,7 @@
                         <script src="/javascripts/search.js"></script>
                         <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
                              -->
-                    <%include partials/search %>
+                    
                     <!-- <div class="g-signin2" id="login-link" data-onsuccess="onSignIn" data-theme="dark"></div> -->
                     <button id="authorize-button" class="button" style="display: none;">Authorize</button>
                     <button id="signout-button" class="button" style="display: none;">Sign Out</button>
@@ -185,6 +185,11 @@
             <div class="tile is-5 is-vertical is-parent">
                 
                 <div class="tile is-child">
+                    <div class='search area'>
+                            <%- include("partials/search",{sRes:null}) %>
+                    </div>
+
+                        
       
                         
                     

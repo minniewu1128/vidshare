@@ -7,16 +7,21 @@ youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU')
 exports.init = function(app){
     // renders the search page
     app.get('/search', function(req,res){
-        response.render('search/search')
+        response.render('search')
     })
+
+    app.get('/searchQuery/:query', function(req,res){
+      var query = req.params.query;
+      youTube.search(req.params.query, 2, function (err, yRes){
+        if (err){
+          console.log("ERROR",err);
+        }
+        else {
+          res.json({sRes: yRes})
+        }
+      })
+    })
+
 
 }
 
-youTube.search('masterchef', 10, function(error, result) {
-    if (error) {
-      console.log(error);
-    }
-    else {
-      console.log(JSON.stringify(result, null, 2));
-    }
-  });

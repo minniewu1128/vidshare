@@ -18,7 +18,7 @@ exports.init = function(app) {
 
 
 index = function(req,res){
-    res.redirect("index.html");
+    res.render("index",{title:"Hello"})
 };
 
 // CRUD Create

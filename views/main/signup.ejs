@@ -1,0 +1,44 @@
+<!-- views/signup.ejs -->
+<!Doctype html>
+<html>
+    <head>
+        <title>Node Authentication</title>
+        <%- include('../partials/header') %>
+    </head>
+
+    <body>
+        <div class='container'>
+            <h1><span clas="fa fa-sign-in"></span>Signup</h1>
+
+            <!-- show messages that come back with authentication -->
+            <% if (message.length >0) { %>
+                <div class='alert alert-danger'><%= message %></div>
+           <% } %>
+
+           <!-- login form -->
+            <form action="/signup" method="post">
+                <div class="field-group">
+                    <label class='label'>Email</label>
+                    <div class='control'>
+                        <input class='input' type='text' name='email'>
+                    </div>
+                   
+                </div>
+                <div class='field-group'>
+                    <label class='label'>Password</label>
+                    <div class='control'>
+                        <input type='password' class='input' name='password'>
+                    </div>
+                    
+                </div>
+
+                <div class="control">
+                        <button type="submit" class="button is-link">Sign Up</button>
+                </div>
+            </form>
+
+            <p>Need an account? <a href='/signup'>Signup</a></p>
+            <p>Or go <a href="/">home</a>.</p>
+        </div>
+    </body>
+</html>

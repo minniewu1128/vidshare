@@ -5,7 +5,7 @@ var mongoModel = require('../models/mongoModel.js');
 
 // Define routes for this controller
 exports.init = function(app) {
-    app.get('/', index); // welcome page
+   
     // hardcoded collection, eg collection = users
     app.put('/users', doCreate); // CRUD create
     app.post('/users', doUpdate); // CRUD update
@@ -16,10 +16,6 @@ exports.init = function(app) {
 
 // No path: display instructions for use
 
-
-index = function(req,res){
-    res.render("index",{title:"Hello"})
-};
 
 // CRUD Create
 // Take the object defined in the request body and do the Create operation in mongoModel

@@ -1,0 +1,48 @@
+<!Doctype HTML>
+
+<html>
+    <head>
+        <title Node Authentication></title>
+        <%- include('../partials/header') %>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1><span class="fa fa-sign-in"></span>Login</h1>
+            <% if (message.length >0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+            <%}%>
+
+
+            <!-- Login Form -->
+            <form action="/login" method="post">
+                
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="abc@gmail.com" name="email">
+                    </div>                   
+                
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" type='password' name='password'>
+                    </div>
+                </div>
+
+                
+                <div class="control">
+                    <button type="submit" class="button is-link">Submit</button>
+                </div>
+                
+            
+            </form>
+
+            <p>Need an account? <a href="/signup">Signup</a></p>
+            <p>Or go <a href="/">home</a>.</p>
+        </div> 
+        <!-- close container -->
+    </body>
+</html>

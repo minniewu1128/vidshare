@@ -1,5 +1,6 @@
 // Uses Node.js mongoDB Driver
 // to install: npm install mongodb --save
+
 var mongoClient = require('mongodb').MongoClient;
 
 // Connection string for running MongoDB locally
@@ -18,11 +19,11 @@ console.log(connection_string)
 var mongoDB;
 
 // Use connect method to connect to the MongoDB server
-mongoClient.connect(connection_string,function(err, db){
-    if (err) doError(err);
-    console.log('Connected to the MongoDB server at: ' + connection_string);
-    mongoDB = db; // make reference to db globally available
-});
+// mongoClient.connect(connection_string,function(err, db){
+//     if (err) doError(err);
+//     console.log('Connected to the MongoDB server at: ' + connection_string);
+//     mongoDB = db; // make reference to db globally available
+// });
 
 /* CRUD Retrieve -> Mongo Find
 @param {string} collection - The collection within the database

@@ -13,6 +13,7 @@ exports.init = function(app, passport) {
         }
         );
     });
+    
     app.get('/logout', function(req,res){
         req.logout();
         res.redirect('/');
@@ -23,6 +24,12 @@ exports.init = function(app, passport) {
         successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
+    }));
+
+    app.post('/login', passport.authenticate('local-login', {
+        successRedirect: '/',
+        failureRedirect : '/login', //redirect back to the signup page if there is an error
+        failureFlash: true // allow flash messages
     }));
 
 }
@@ -37,6 +44,7 @@ getSignup = function(req,res) {
     // render the page and pass in any flash data if it exists
     res.render('main/signup', {message: req.flash('signupMessage')});
 }
+
 
 
 function isLoggedIn(req, res, next) {

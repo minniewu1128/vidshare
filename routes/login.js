@@ -1,7 +1,5 @@
 // authentication code gotten from: https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 
-
-
 exports.init = function(app, passport) {
 
     app.get('/login', getLogin);
@@ -13,6 +11,8 @@ exports.init = function(app, passport) {
         }
         );
     });
+
+    app.get('/membersOnly', checkAuthentication, doMembersOnly);
     
     app.get('/logout', function(req,res){
         req.logout();
@@ -27,7 +27,7 @@ exports.init = function(app, passport) {
     }));
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/',
+        successRedirect: '/membersOnly',
         failureRedirect : '/login', //redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -57,4 +57,27 @@ function isLoggedIn(req, res, next) {
 
     // if user is not authenticated in the session, redirect to homepage
     res.redirect('/')
+}
+
+function checkAuthentication(req, res, next) {
+    console.log('checking authentication')
+    // Passport will set req.isAuthenticated
+    if(req.isAuthenticated()){
+        console.log('user is authenticated')
+        // call the next bit of middleware, as defined above this refers to doMembersOnly
+        next();
+    }
+    else{
+        res.redirect('/login')
+    }
+}
+// Members only path handler
+doMembersOnly = function(req, res) {
+   if (req.user){
+       console.log(req.user)
+       res.render('partials/userInfo', {user: req.user});
+
+   }else{
+       res.render('error', {'message': 'Error: authentication failure'})
+   }
 }

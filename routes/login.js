@@ -3,7 +3,6 @@
 
 
 exports.init = function(app, passport) {
-
     app.get('/login', getLogin);
     app.get('/signup', getSignup);
 
@@ -56,5 +55,7 @@ function isLoggedIn(req, res, next) {
     }
 
     // if user is not authenticated in the session, redirect to homepage
-    res.redirect('/')
+    else {
+        res.redirect('/') }
+
 }

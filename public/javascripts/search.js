@@ -22,7 +22,7 @@ $(function(){
                 console.log(res)
                 for(var i=0; i < res.sRes.items.length; i++){
                     r = `
-                        <a class="panel-block is-active tab-content" id="search-tab">
+                        <a class="panel-block is-active tab-content" id="search-tab" href="addVideoToPlaylist/${res.sRes.items[i].id.videoId}">
                         <span class="panel-icon">
                         <i class="fa fa-book"></i>
                         </span>

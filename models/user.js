@@ -8,8 +8,7 @@ var userSchema = new mongoose.Schema({
             email: String,
             password: String
             },
-    playlists: [ObjectId],
-    standby: ObjectId
+    playlists: [ObjectId]
 })
 
 // Methods

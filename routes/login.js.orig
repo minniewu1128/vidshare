@@ -55,6 +55,7 @@ function isLoggedIn(req, res, next) {
     }
 
     // if user is not authenticated in the session, redirect to homepage
+<<<<<<< HEAD
     res.redirect('/')
 }
 
@@ -77,7 +78,11 @@ doMembersOnly = function(req, res) {
        res.render('partials/userInfo', {user: req.user});
 
    }else{
-    res.redirect('/') }
-
+       res.render('error', {'message': 'Error: authentication failure'})
    }
+=======
+    else {
+        res.redirect('/') }
 
+>>>>>>> auth
+}

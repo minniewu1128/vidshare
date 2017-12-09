@@ -1,7 +1,6 @@
 // authentication code gotten from: https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 
 exports.init = function(app, passport) {
-
     app.get('/login', getLogin);
     app.get('/signup', getSignup);
 
@@ -56,6 +55,7 @@ function isLoggedIn(req, res, next) {
     }
 
     // if user is not authenticated in the session, redirect to homepage
+<<<<<<< HEAD
     res.redirect('/')
 }
 
@@ -80,4 +80,9 @@ doMembersOnly = function(req, res) {
    }else{
        res.render('error', {'message': 'Error: authentication failure'})
    }
+=======
+    else {
+        res.redirect('/') }
+
+>>>>>>> auth
 }

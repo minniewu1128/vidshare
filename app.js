@@ -13,6 +13,7 @@ var bodyParser = require('body-parser');
 // var googleAuth = require('google-auth-library');
 var mongoose = require('mongoose')
 var passport = require('passport')
+var request = require('request');
 
 var connection_string = 'mongodb://minniew:Yu35016188!@ds111496.mlab.com:11496/usersdb'
 

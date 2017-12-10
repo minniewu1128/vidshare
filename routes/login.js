@@ -55,7 +55,7 @@ function isLoggedIn(req, res, next) {
     }
 
     // if user is not authenticated in the session, redirect to homepage
-    res.redirect('/')
+    res.redirect('/guestHome')
 }
 
 function checkAuthentication(req, res, next) {
@@ -74,7 +74,7 @@ function checkAuthentication(req, res, next) {
 doMembersOnly = function(req, res) {
    if (req.user){
        console.log(req.user)
-       res.render('partials/userInfo', {user: req.user});
+       res.redirect('/');
 
    }else{
     res.redirect('/') }

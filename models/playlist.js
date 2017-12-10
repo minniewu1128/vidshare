@@ -3,8 +3,11 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var playlistSchema = new mongoose.Schema({
     name: String,
-    createdBy: ObjectId,
-    videos : []
+    createdBy: {
+        type: ObjectId,
+        ref: 'User'
+    },
+    plist : []
 });
 
 // Methods

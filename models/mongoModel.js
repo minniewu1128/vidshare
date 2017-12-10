@@ -1,22 +1,22 @@
 // Uses Node.js mongoDB Driver
 // to install: npm install mongodb --save
 
-var mongoClient = require('mongodb').MongoClient;
+// var mongoClient = require('mongodb').MongoClient;
 
-// Connection string for running MongoDB locally
+// // Connection string for running MongoDB locally
 
 
-var connection_string = 'mongodb://minniew:Yu35016188!@ds111496.mlab.com:11496/usersdb'
+// var connection_string = 'mongodb://minniew:Yu35016188!@ds111496.mlab.com:11496/usersdb'
 
-console.log(process.env.password)
-if(process.env.password){
-    console.log('using secret password')
-    connection_string = `mongodb://minniew:${process.env.password}@ds111496.mlab.com:11496/usersdb`
-}
+// console.log(process.env.password)
+// if(process.env.password){
+//     console.log('using secret password')
+//     connection_string = `mongodb://minniew:${process.env.password}@ds111496.mlab.com:11496/usersdb`
+// }
 
-console.log(connection_string)
-// Global variable of the connected database
-var mongoDB;
+// console.log(connection_string)
+// // Global variable of the connected database
+// var mongoDB;
 
 // Use connect method to connect to the MongoDB server
 // mongoClient.connect(connection_string,function(err, db){

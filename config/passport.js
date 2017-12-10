@@ -90,11 +90,13 @@ exports.init = function(passport) {
                 // if there is no user with that email
                 // create the user
                 var newUser = new User();
-
+                
                 // set the user's local credentials
                 newUser.name = request.body.name;
                 newUser.local.email = email;
                 newUser.local.password = newUser.generateHash(password);
+                console.log('new user', newUser)
+                
 
                 // save the user
                 newUser.save(function(err) {

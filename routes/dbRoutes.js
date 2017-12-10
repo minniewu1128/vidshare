@@ -12,6 +12,8 @@ exports.init = function(app) {
     app.get('/users', doRetrieve); // CRUD retrieve
     // The CRUD delete path is up to you to define
     app.delete('/users', doDelete);
+
+    
 }
 
 // No path: display instructions for use

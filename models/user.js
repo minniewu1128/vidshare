@@ -8,7 +8,7 @@ var userSchema = new mongoose.Schema({
             email: String,
             password: String
             },
-    playlists: [ObjectId]
+    playlists: [{type: ObjectId, ref: 'Playlist'}]
 })
 
 // Methods

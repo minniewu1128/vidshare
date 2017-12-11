@@ -13,6 +13,8 @@ $(function(){
                 console.log("posted successfully!", res.data);
             }
         })
-
+        
     })
+
+    // Adding video to playlist
 })

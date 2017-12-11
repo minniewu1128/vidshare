@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('partials/header')%>
+    </head>
+    <body>
+        <h1>Your Playlists</h1>
+        <table class="table">
+            <tr>
+                <th>Playlist Name</th>
+            </tr>
+        
+            <% lists.forEach(function(list) { %>
+                <tr>
+                    <td><a href='/playlists/show/<%=list._id%>'><%=list.name%></a></td>
+                </tr>
+                
+            <% })%>
+        </table>
+    </body>
+
+</html>

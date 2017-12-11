@@ -4,7 +4,7 @@ exports.init = function(app){
 }
 
 getIndex = function(req,res){
-    console.log("session",req.session)
+    console.log("get /",req.session)
     res.render("index", {user: req.user})
 };
 

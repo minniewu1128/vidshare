@@ -43,6 +43,27 @@ $(function(){
             }
         })
     })
+
+    // show specific playlist
+    $('.showPlaylistLink').click(function(event){
+        
+        console.log("href", this.href)
+        
+        
+    })
+
+    $('.addToStandbyButton').click(function(event){
+        console.log("video id:", this.id)
+        $.ajax({
+            url: `/standby/add/${this.id}`,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function(res) {
+                // add to session
+                $('#standby-tab').append(res);
+            }
+        })
+    })
     
 
     // Adding video to playlist
@@ -51,3 +72,11 @@ $(function(){
 function closeNewPlaylistModal(){
     $('#newPlaylistFormModal').toggleClass("is-active")
 }
+
+// show specific playlist
+$('.showPlaylistLink').click(function(event){
+    
+    console.log("clicked")
+    
+    
+})

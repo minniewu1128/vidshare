@@ -15,9 +15,19 @@ exports.init = function (app, passport) {
 
     // getting form to create new playlist
     app.get('/playlists/new', isLoggedIn, function(req,res){
-        console.log("req.user in newplaylist",req.user)
         res.render('partials/newPlaylist', {message: req.flash('newPlaylistMessage')})
     });
+
+    // show the videos in a specific playlist
+    app.get('/playlists/show/:id', isLoggedIn, function(req,res){
+        Playlist.findById(req.params.id, function(err, list){
+            if(err){
+                console.log('error', err)
+            }
+            console.log('playlist', list)
+            res.render('partials/showPlaylist', {list: list, user: req.user})
+        })
+    })
 
     // route for creating a new playlist
     app.post('/playlists/new', isLoggedIn, function(req,res){
@@ -43,11 +53,32 @@ exports.init = function (app, passport) {
    
     })
 
-
+    
     // adding new video to a specific playlist
-    app.put('/addVideo/:playlistId/:videoId', isLoggedIn, function(req,res){
-        console.log("playlist id", req.params.playlistLid, "video id", req.params.videoId)
-        Playlist.findByIdAndUpdate(req.params.playlistId,{pList: pList.append(req.params.videoId)})
+    app.get('/addVideo/:playlistId/:videoId/:videoTitle?', isLoggedIn, function(req,res){
+        console.log('route')
+        var video;
+        console.log("playlist id", req.params.playlistId, "video id", req.params.videoId)
+        if(req.params.videoTitle){
+            video = {title: req.params.videoTitle, _id: req.params.videoId}
+        }
+        else {
+            video = {title: "Title Unavailable", _id: req.params.videoId}
+        }
+        Playlist.findByIdAndUpdate(req.params.playlistId, {$push: {'plist': video}}, function(err,video){
+            if(err) return err;
+            console.log('video',video)
+            res.send(video)
+        })
+
+    })
+
+    // adding new video to standby
+    app.post('/standby/add/:videoId', isLoggedIn, function(req,res){
+        
+        req.session.standby = [req.params.videoId]
+        console.log("session", req.session)
+        res.render('partials/standbyList', {session: req.session})
     })
 }
 

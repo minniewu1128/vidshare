@@ -75,8 +75,14 @@ exports.init = function (app, passport) {
 
     // adding new video to standby
     app.post('/standby/add/:videoId', isLoggedIn, function(req,res){
-        
-        req.session.standby = [req.params.videoId]
+        if(req.session.standby){
+            req.session.standby.push(req.params.videoId)
+        }
+        else{
+            req.session.standby = [];
+            req.session.standby.push(req.params.videoId);
+        }
+        req.session.save();
         console.log("session", req.session)
         res.render('partials/standbyList', {session: req.session})
     })

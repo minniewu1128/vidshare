@@ -1,9 +1,12 @@
-<ol id="standbyList">
-    <%= session%>
-    <!-- <% for(let int i = 0; i< session.standby.length; i++){%>
-        <li>
-            <p>Video: <%=session.standby[i]%></p>
-        </li>
-    <% }%> -->
 
-</ol>
+<div class = "showStandby container">
+    <ol>
+        <%for(let i=0; i<session.standby.length; i++ ){ %>
+            <li><%= session.standby[i] %></li>
+        <% } %>
+    </ol>
+</div>
+
+                    
+
+    

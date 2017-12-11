@@ -24,7 +24,7 @@ $(function(){
             type: 'GET',
             contentType: 'application/json',
             success: function(res) {
-                $('#playlists-tab').html(res);
+                $('#playlists-tab').append(res);
                 
             }
         })
@@ -44,11 +44,19 @@ $(function(){
         })
     })
 
-    // show specific playlist
+    // show specific playlist asynchronously
     $('.showPlaylistLink').click(function(event){
         
-        console.log("href", this.href)
-        
+        console.log("id", this.id)
+        $.ajax({
+            url: `/playlists/show/${this.id}`,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function(res) {
+                console.log('response received', res)
+                $('#playlists-tab').append(res)
+            }
+        })
         
     })
 
@@ -60,7 +68,8 @@ $(function(){
             contentType: 'application/json',
             success: function(res) {
                 // add to session
-                $('#standby-tab').append(res);
+                console.log('sucess', res)
+                $('#standby-tab').html(res);
             }
         })
     })
@@ -73,10 +82,3 @@ function closeNewPlaylistModal(){
     $('#newPlaylistFormModal').toggleClass("is-active")
 }
 
-// show specific playlist
-$('.showPlaylistLink').click(function(event){
-    
-    console.log("clicked")
-    
-    
-})

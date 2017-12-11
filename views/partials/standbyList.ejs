@@ -2,7 +2,7 @@
 <div class = "showStandby container">
     <ol>
         <%for(let i=0; i<session.standby.length; i++ ){ %>
-            <li><%= session.standby[i] %></li>
+            <li id="<%=session.standby[i].id%>"><%= session.standby[i].title %></li>
         <% } %>
     </ol>
 </div>

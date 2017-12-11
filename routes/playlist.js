@@ -2,6 +2,12 @@
 var Playlist = require('../models/playlist.js');
 var User = require('../models/user.js');
 
+var YouTube = require('youtube-node');
+
+var youTube = new YouTube();
+
+youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU')
+
 exports.init = function (app, passport) {
     // getting playlists by user
     app.get('/playlists', isLoggedIn, function(req,res){
@@ -74,13 +80,15 @@ exports.init = function (app, passport) {
     })
 
     // adding new video to standby
-    app.post('/standby/add/:videoId', isLoggedIn, function(req,res){
+    app.post('/standby/add/:videoId/:videoTitle', isLoggedIn, function(req,res){
+        // get the title of the video from Youtube first
+        var video = {id: req.params.videoId, title: req.params.videoTitle};
         if(req.session.standby){
-            req.session.standby.push(req.params.videoId)
+            req.session.standby.push(video)
         }
         else{
             req.session.standby = [];
-            req.session.standby.push(req.params.videoId);
+            req.session.standby.push(video);
         }
         req.session.save();
         console.log("session", req.session)

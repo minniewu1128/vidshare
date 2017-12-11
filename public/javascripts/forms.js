@@ -24,7 +24,7 @@ $(function(){
             type: 'GET',
             contentType: 'application/json',
             success: function(res) {
-                $('#playlists-tab').append(res);
+                $('#playlists-tab').html(res);
                 
             }
         })
@@ -61,9 +61,9 @@ $(function(){
     })
 
     $('.addToStandbyButton').click(function(event){
-        console.log("video id:", this.id)
+        console.log("video id:", this.id, "video title:", this.title)
         $.ajax({
-            url: `/standby/add/${this.id}`,
+            url: `/standby/add/${this.id}/${this.title}`,
             type: 'POST',
             contentType: 'application/json',
             success: function(res) {

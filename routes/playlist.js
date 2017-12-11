@@ -3,34 +3,15 @@ var Playlist = require('../models/playlist.js');
 var User = require('../models/user.js');
 
 exports.init = function (app, passport) {
-    // index for playlists, which returns the user generated playlists
-
-
-    // getting playlists by user
-    // app.get('/playlists', isLoggedIn, function(req,res){
-    //     console.log('checked login, now finding by user ', console.log(req.user))
-    //     /* to find playlist by user: */ 
-    //     Playlist.byUser(req.user._id, function(err, list) {
-    //         res.render('playlistsIndex', {lists: list, user: req.user})
-    //     })
-      
-    // });
-
-
     // getting playlists by user
     app.get('/playlists', isLoggedIn, function(req,res){
         Playlist.find({'createdBy': req.user._id}, function(err, list){
             if(err){
                 console.log("error", err)
             }
-            console.log('playlists', list)
+            res.render('partials/playlistsIndex', {lists: list, user: req.user})
         })
-        res.render('playlistsIndex', {lists: [{name: 'a', _id: '123'},{name: 'b', _id: '234' }], user: req.user})
-        // Playlist.byUser(req.user._id, function(err,lists){
-        //     res.render('playlistsIndex', {list: lists, user: req.user})
-        // })
     })
-
 
     // getting form to create new playlist
     app.get('/playlists/new', isLoggedIn, function(req,res){

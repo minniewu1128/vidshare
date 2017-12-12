@@ -36,7 +36,7 @@ exports.init = function(app, passport) {
 
 getLogin = function(req,res) {
     // render the page and pass in any flash data if it exists
-    res.render('main/login', message: req.flash('loginMessage'));
+    res.render('main/login', {message: req.flash('loginMessage')});
 }
 
 getSignup = function(req,res) {

@@ -61,7 +61,7 @@ exports.init = function (app, passport) {
 
     
     // adding new video to a specific playlist
-    app.get('/addVideo/:playlistId/:videoId/:videoTitle?', isLoggedIn, function(req,res){
+    app.post('/addVideo/:playlistId/:videoId/:videoTitle?', isLoggedIn, function(req,res){
         console.log('route')
         var video;
         console.log("playlist id", req.params.playlistId, "video id", req.params.videoId)

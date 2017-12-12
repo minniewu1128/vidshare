@@ -1,7 +1,27 @@
-exports.init = function(io) {
-    console.log('io')
-    var currentUsers = 0; // keeps track of number of users in the room
+exports.init = function(io, passportSocketIo, cookieParser, sessionStore, passport) {
 
+    // configure socket.io
+    io.use(passportSocketIo.authorize({
+        passport: passport,
+        cookieParser: cookieParser,
+        secret: 'mysecret',
+        store: sessionStore,
+        success: onAuthorizeSuccess, // optional callback on success
+        fail: onAuthorizeFail,
+    }));
+
+    var currentUsers = 0; // keeps track of number of users in the room
+    var eventSocket = io.of('/');
+
+    eventSocket.on('connection', function(socket){
+        console.log('hi')
+        socket.on('event1', function(eventData){
+            if (socket.request.user && socket.request.user.logged_in){
+                console.log("socket.request.user", socket.request.user)
+            }
+        
+        });
+    });
     // When a new connection is initiated
         io.sockets.on('connection', function(socket){
             console.log("user",socket.request.user)
@@ -28,5 +48,16 @@ exports.init = function(io) {
             })
         });
 
-
+        function onAuthorizeSuccess(data,accept){
+            console.log('successful connection to socket.io');
+            // The accept-callback still allows 
+            accept(); // let the user through
+        }
+        
+        function onAuthorizeFail(data, message, error, accept){
+            if(error) accept(new Error(message));
+            console.log('failed connection to socket.io', message);
+            accept(null,false);
+        
+        }
 }

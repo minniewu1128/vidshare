@@ -19,7 +19,8 @@ exports.init = function(app){
         }
         else {
           // res.render('partials/search', {sRes: yRes})
-          res.json({sRes: yRes})
+          console.log(yRes)
+          res.render('partials/searchResults',{sRes: yRes})
           
         }
 

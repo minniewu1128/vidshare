@@ -68,8 +68,33 @@ $(function(){
             contentType: 'application/json',
             success: function(res) {
                 // add to session
-                console.log('sucess', res)
+                console.log('sucessfully added to standby')
                 $('#standby-tab').html(res);
+            }
+        })
+    })
+
+    $('.addToPlaylistButton').click(function(event){
+        $('#search-tab').on('click','button', function(){
+            console.log('new button clicked')
+            $.ajax({
+                url: `addVideo/5a2e4eb7ccd285ec734a57a4/${this.id}/${this.title}`,
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(res) {
+                    console.log("successfully added to playlist")
+                    // show message that video was added to playlist
+                }
+            })
+        })
+        console.log("video id", this.id, "video title", this.title)
+        $.ajax({
+            url: `addVideo/5a2e4eb7ccd285ec734a57a4/${this.id}/${this.title}`,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function(res) {
+                console.log("successfully added to playlist")
+                // show message that video was added to playlist
             }
         })
     })

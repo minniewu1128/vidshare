@@ -1,0 +1,16 @@
+
+    <script src="javascripts/forms.js"></script>
+    <table id="searchResults">
+        <% for(let i=0; i<sRes.items.length; i++){ %>
+            <% let video = sRes.items[i] %>
+            <tr>
+                <td><%= video.snippet.title %> </td>
+                <td><button class='button is-small addToStandbyButton' id="<%=video.id.videoId%>" title="<%=video.snippet.title%>">Add to Standby</button></td>
+                <td><button class="button is-small addToPlaylistButton" id="<%=video.id.videoId%>" title="<%=video.snippet.title%>">Add to Playlist</button>
+            </tr>
+            
+        <%}%>
+    </table>
+     
+
+

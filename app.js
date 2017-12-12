@@ -51,24 +51,18 @@ app.use(cookieParser());
 
 // get information from html forms
 app.use(bodyParser());
+
+app.use(session({
+    key: 'connect.sid',
+    store: sessionStore,
+    secret:'mysecret'
+}))
 var sessionStore = new RedisStore({
     host: 'localhost',
     port: 50000,
 });
 // required for passport
-app.use(session({
-    store: sessionStore,
-    secret:'mysecret'
-}))
 
-// configure socket.io
-io.use(passportSocketIo.authorize({
-    cookieParser: cookieParser,
-    secret: 'mysecret',
-    store: sessionStore,
-    success: onAuthorizeSuccess, // optional callback on success
-    fail: onAuthorizeFail,
-}));
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -118,21 +112,10 @@ app.use(function(req,res){
 
 
 
-function onAuthorizeSuccess(data,accept){
-    console.log('successful connection to socket.io');
-    // The accept-callback still allows 
-    accept(); // let the user through
-}
 
-function onAuthorizeFail(data, message, error, accept){
-    if(error) accept(new Error(message));
-    console.log('failed connection to socket.io', message);
-    accept(null,false);
-
-}
 httpServer.listen(50000, function() {
 console.log('Listening on 50000');
 })
 
 var roomSockets = require('./routes/serverSocket.js');
-roomSockets.init(io);
+roomSockets.init(io, passportSocketIo, cookieParser, sessionStore, passport);

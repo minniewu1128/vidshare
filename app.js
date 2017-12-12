@@ -14,6 +14,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
 var passport = require('passport')
 var request = require('request');
+var YoutubePlayer = require('youtube-player');
 
 
 var connection_string = 'mongodb://minniew:Yu35016188!@ds111496.mlab.com:11496/usersdb'

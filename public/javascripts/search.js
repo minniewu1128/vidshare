@@ -6,6 +6,22 @@ $(function(){
         $('.tab-content').removeClass('is-active');
         $(this).addClass('is-active');
         $("#"+tab_id).addClass('is-active');
+        if(tab_id==="search-tab"){
+            $('#standby-tab').hide();
+            $('#playlists-tab').hide();
+            $("#search-tab").show();
+        }
+        else if(tab_id === "standby-tab"){
+            $("#search-tab").hide();
+            $("#standby-tab").show();
+            $("#playlists-tab").hide();
+        }
+        else{
+            $("#search-tab").hide();
+            $("#standby-tab").hide();
+            $("#playlists-tab").show();
+
+        }
     })
 
 

@@ -1,5 +1,7 @@
 $(function(){
     // Adding a new playlist
+
+    
     $('#addPlaylistButton').click(function(event){
         var inputName = $('#playlist-name').val();
         console.log('Name', inputName)

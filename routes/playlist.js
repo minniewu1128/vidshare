@@ -9,6 +9,12 @@ var youTube = new YouTube();
 youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU')
 
 exports.init = function (app, passport) {
+    
+    app.get('/standby', isLoggedIn, function(req,res){
+        console.log(req.session.standby)
+        res.json(req.session.standby)
+    })
+
     // getting playlists by user
     app.get('/playlists', isLoggedIn, function(req,res){
         Playlist.find({'createdBy': req.user._id}, function(err, list){
@@ -92,7 +98,8 @@ exports.init = function (app, passport) {
         }
         req.session.save();
         console.log("session", req.session)
-        res.render('partials/standbyList', {session: req.session})
+        res.send(req.session.standby);
+        // res.render('partials/standbyList', {session: req.session})
     })
 }
 

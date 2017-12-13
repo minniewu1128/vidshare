@@ -17,7 +17,8 @@
     </div>
     <p class="panel-tabs">
       <a class="is-active tab" data-tab="search-tab">Search</a>
-      <a class='tab' data-tab="standby-tab">Standby</a>
+      <a class="tab" data-tab="collective-standby-tab">Collective Standby</a>      
+      <a class='tab' data-tab="standby-tab">My Standby</a>
       <a class='tab' data-tab="playlists-tab" id="getPlaylistButton">Playlists</a>
 
     </p>
@@ -25,17 +26,22 @@
     <!-- stuff on the search tab -->
 
     <a class = "panel-block tab-content" id="search-tab"></a>
-
-
+    
+    <!-- stuff on the collaborative standby tab -->
+    <div class="panel-black tab-content" id="collective-standby-tab">
+       <div id='collective-standby-tab-list'></div>
+    </div>
+    
     <!-- stuff on the standby-tab -->
     <div class="panel-block tab-content standby-tab" id="standby-tab">
       <div id="standby-tab-list"></div> </br>
     </div>
-    <div class="panel-block tab-content standby-tab">
-      <button id="confirmStandby" class="button">Confirm Standby</button>
-    </div>
+
     
 
     <a class="panel-block tab-content" id="playlists-tab"></a>
-
+    
+    <div class="panel-block tab-content standby-tab" id="confirm-standby-div">
+        <button id="confirmStandby" class="button">Confirm Standby</button>
+    </div>
   </nav>

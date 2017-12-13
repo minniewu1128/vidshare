@@ -11,21 +11,11 @@ exports.init = function(io) {
     // }));
     var socket = io.of('/')
     var currentUsers = 0; // keeps track of number of users in the room
-    var eventSocket = io.of('/new');
+    collectiveStandby = [];
    
-    eventSocket.on('connection', function(socket){
-        console.log('eventSocket', eventSocket)
-        console.log('hi')
-        socket.on('event1', function(eventData){
-            if (socket.request.user && socket.request.user.logged_in){
-                console.log("socket.request.user", socket.request.user)
-            }
-        
-        });
-    });
+
     // When a new connection is initiated
         io.sockets.on('connection', function(socket){
-            console.log("user",socket.request.user)
             ++ currentUsers;
             
             // Send ('emit a 'user_connected' event back to the socket that just connected.)
@@ -37,9 +27,17 @@ exports.init = function(io) {
             socket.broadcast.emit('users_connected', {number: currentUsers});
 
             socket.on('resetStandby', function(data){
-                console.log('standby reset', data);
-                socket.emit('resetStandby', data);
-                socket.broadcast.emit('resetStandby', data);
+                if(collectiveStandby.length===0){
+                    collectiveStandby = data
+                }
+                else{
+                    for(let i=0; i< data.length; i++){
+                        collectiveStandby.push(data[i]);
+                    }
+                }
+                console.log('collectiveStandby reset', collectiveStandby);
+                socket.emit('resetStandby', collectiveStandby);
+                socket.broadcast.emit('resetStandby', collectiveStandby);
 
             })
             socket.on('message', function(data){

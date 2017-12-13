@@ -24,6 +24,18 @@ socket.on('resetStandby', function(data){
     console.log(collectiveStandby)
     console.log('my standby was reset')
     nextVidId = collectiveStandby[0].id;
+    var resRender = 
+    `<div class = "showStandby container">
+        <ol>`;
+    for (let i=0; i<collectiveStandby.length; i++) {
+    let iterate =  
+        `<li id=${collectiveStandby[i].id}> 
+            ${collectiveStandby[i].title}
+        </li>`
+    resRender = resRender.concat(iterate)
+    }
+    resRender = resRender.concat(`</ol> </div>`)
+    $('#collective-standby-tab-list').html(resRender);
     console.log('nextVidID', nextVidId)
 })
 
@@ -122,8 +134,7 @@ $(function(){
                 // res is array of {id: id, title: title} pairs
                 console.log('sucessfully added to standby', res)
                 var resRender = 
-                    `<div class = "showStandby container">
-                        <ol>`;
+                    "<ol>"
                 for (let i=0; i<res.length; i++) {
                     let iterate =  
                         `<li id=${res[i].id}> 
@@ -131,7 +142,7 @@ $(function(){
                         </li>`
                     resRender = resRender.concat(iterate)
                 }
-                resRender = resRender.concat(`</ol> </div>`)
+                resRender = resRender.concat(`</ol>`)
                            
                 // put partial stuff here
                 $('#standby-tab-list').html(resRender);
@@ -249,7 +260,7 @@ function onPlayerStateChange(e) {
         resRender = resRender.concat(iterate)
         }
         resRender = resRender.concat(`</ol> </div>`)
-        $('#standby-tab').html(resRender);
+        $('#collective-standby-tab').html(resRender);
         
         
         e.target.playVideo();

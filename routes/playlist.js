@@ -21,6 +21,7 @@ exports.init = function (app, passport) {
             if(err){
                 console.log("error", err)
             }
+            console.log("playlist", list);
             res.render('partials/playlistsIndex', {lists: list, user: req.user})
         })
     })
@@ -36,7 +37,7 @@ exports.init = function (app, passport) {
             if(err){
                 console.log('error', err)
             }
-            console.log('playlist', list)
+            // console.log('playlist', list)
             res.render('partials/showPlaylist', {list: list, user: req.user})
         })
     })

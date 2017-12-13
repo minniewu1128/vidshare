@@ -1,9 +1,8 @@
-var nextVidId; 
+var standby; 
+var nextVidId;
 
 $(function(){
     // Adding a new playlist
-
-
     $('#addPlaylistButton').click(function(event){
         var inputName = $('#playlist-name').val();
         console.log('Name', inputName)
@@ -28,6 +27,7 @@ $(function(){
             type: 'GET',
             contentType: 'application/json',
             success: function(res) {
+                console.log("playlist html", res)
                 $('#playlists-tab').html(res);
                 
             }
@@ -88,17 +88,16 @@ $(function(){
                     
                 // put partial stuff here
                 $('#standby-tab').html(resRender);
+                standby = res;
                 nextVidId = res[0].id;
                 console.log('nextVidID', nextVidId)
             }
         })
         
-    })
+    
 
-    $('.addToPlaylistButton').click(function(event){
-        $('#search-tab').on('click','button', function(){
-            console.log('new button clicked')
-            $.ajax({
+        // code to show what playlists there are
+        $.ajax({
                 url: `addVideo/5a303bde48e5713b1095ccb5/${this.id}/${this.title}`,
                 type: 'POST',
                 contentType: 'application/json',
@@ -106,25 +105,8 @@ $(function(){
                     console.log("successfully added to playlist")
                     // show message that video was added to playlist
                 }
-            })
-        })
-        console.log("video id", this.id, "video title", this.title)
-        $.ajax({
-            url: `addVideo/5a2e4eb7ccd285ec734a57a4/${this.id}/${this.title}`,
-            type: 'POST',
-            contentType: 'application/json',
-            success: function(res) {
-                console.log("successfully added to playlist")
-                // show message that video was added to playlist
-            }
-        })
-    })
-
-
-    
-
-    // Adding video to playlist
-})
+                });
+    });
 
 function closeNewPlaylistModal(){
     $('#newPlaylistFormModal').toggleClass("is-active")
@@ -141,20 +123,19 @@ function getNextVideoIdFromSession(){
         contentType: 'application/json',
             success: function(res) {
                 console.log('got standby from session', res)
-                nextVidId = res.id;
+                standby = res;
+                nextVidId = standby[0].id
                 console.log(nextVidId);
             }
 
     });
     
 }
-
-
-
+});
 
 var tag = document.createElement('script');
 console.log('script')
-tag.src = "http://www.youtube.com/iframe_api";
+tag.src = "https://www.youtube.com/iframe_api";
 
 var firstScriptTag = document.getElementsByTagName('script')[0];
 
@@ -186,7 +167,7 @@ function onPlayerReady(event) {
 var done = false;
 
 function onPlayerStateChange(e) {
-    console.log('player state changed')
+
     // on state change e.data holds state status
     if(e.data === YT.PlayerState.PLAYING){
         console.log('video is playing')
@@ -199,9 +180,33 @@ function onPlayerStateChange(e) {
         console.log('video has ended');
         // find id for next video  
         console.log('nextVidId', nextVidId);
-        playNextVideo(player,nextVidId)
+        playNextVideo(e.target,nextVidId)
+    
+    }
+    if(e.data === YT.PlayerState.CUED) {
+        console.log('next video is now on cue')
+        // remove current id from standby
+        standby = standby.slice(1);
+        console.log(standby)
+        // re render partial for standby list
+        var resRender = 
+        `<div class = "showStandby container">
+            <ol>`;
+        for (let i=0; i<standby.length; i++) {
+        let iterate =  
+            `<li id=${standby[i].id}> 
+                ${standby[i].title}
+            </li>`
+        resRender = resRender.concat(iterate)
+        }
+        resRender = resRender.concat(`</ol> </div>`)
+        $('#standby-tab').html(resRender);
         
         
+        e.target.playVideo();
+        // getNextVideoIdFromSession()
+        
+        // take current video out of standby list
 
     }
 };
@@ -214,30 +219,8 @@ function playNextVideo(player, vidId){
     player.cueVideoById({
         videoId: vidId
     })
-    player.playVideo();
-    getNextVideoIdFromSession()
+  
 }
-$.ajax({
-    url: `/playlists/show/${this.id}`,
-    type: 'GET',
-    contentType: 'application/json',
-    success: function(res) {
-        console.log('response received', res)
-        $('#playlists-tab').append(res)
-    }
-})
-
-
-// // apikey: AIzaSyDn0HzJJS9Rhq9nGu16d52eJjDISw0Rwlo
-// // OAuth clientID: 925927241615-co4f9t9tgmvr8t84a7m06najfaesb13j.apps.googleusercontent.com"
-// // client secret: LghV_KQPC505TOJiPxph3-4y
-
-
-
-
-// // 5. The API calls his function when the player's state changes.
-// //    The function indicates that when playing a video (state=1),
-// //    the player should play for six seconds and then stop.
 
 
 

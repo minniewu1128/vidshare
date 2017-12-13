@@ -1,19 +1,20 @@
-exports.init = function(io, passportSocketIo, cookieParser, sessionStore, passport) {
+exports.init = function(io) {
 
     // configure socket.io
-    io.use(passportSocketIo.authorize({
-        passport: passport,
-        cookieParser: cookieParser,
-        secret: 'mysecret',
-        store: sessionStore,
-        success: onAuthorizeSuccess, // optional callback on success
-        fail: onAuthorizeFail,
-    }));
-
+    // io.use(passportSocketIo.authorize({
+    //     cookieParser: cookieParser,
+    //     key: 'express.sid',                                                                                                                                    
+    //     secret: 'mysecret',
+    //     store: sessionStore,
+    //     success: onAuthorizeSuccess, // optional callback on success
+    //     fail: onAuthorizeFail,
+    // }));
+    var socket = io.of('/')
     var currentUsers = 0; // keeps track of number of users in the room
-    var eventSocket = io.of('/');
-
+    var eventSocket = io.of('/new');
+   
     eventSocket.on('connection', function(socket){
+        console.log('eventSocket', eventSocket)
         console.log('hi')
         socket.on('event1', function(eventData){
             if (socket.request.user && socket.request.user.logged_in){
@@ -35,7 +36,12 @@ exports.init = function(io, passportSocketIo, cookieParser, sessionStore, passpo
             */
             socket.broadcast.emit('users_connected', {number: currentUsers});
 
+            socket.on('resetStandby', function(data){
+                console.log('standby reset', data);
+                socket.emit('resetStandby', data);
+                socket.broadcast.emit('resetStandby', data);
 
+            })
             socket.on('message', function(data){
                 console.log('data.message', data.message)
                 socket.emit('message', data);
@@ -48,16 +54,5 @@ exports.init = function(io, passportSocketIo, cookieParser, sessionStore, passpo
             })
         });
 
-        function onAuthorizeSuccess(data,accept){
-            console.log('successful connection to socket.io');
-            // The accept-callback still allows 
-            accept(); // let the user through
-        }
-        
-        function onAuthorizeFail(data, message, error, accept){
-            if(error) accept(new Error(message));
-            console.log('failed connection to socket.io', message);
-            accept(null,false);
-        
-        }
+
 }

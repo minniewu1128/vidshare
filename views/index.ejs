@@ -2,7 +2,6 @@
 <html>
     <head>
         <%- include("partials/header") %>
-        <script src=javascripts/clientSocket.js></script>
     </head>
 
     <body>
@@ -14,8 +13,7 @@
         <div class="tile is-ancestor">
             
             <div class="tile is-7 is-vertical is-parent">
-                <p>There are currently <span id="numUsers">no</span> users </p>
-                
+                             
                 <div class="tile is-child">
                     <iframe type="text/html" width="640" height="385" id="player" 
                     src="https://www.youtube.com/embed/sGPrx9bjgC8?enablejsapi=1"></iframe>
@@ -47,42 +45,7 @@
                     <div class='search area'>
                             <%- include("partials/search",{sRes:null}) %>
                     </div>
-                   
-                    <div class="index_reload">
-                        <!--index_reload-->
-                        <div id="chat_area">
-                            <!--chat_box-->
-                            <div class="chat_box main_chat2 hide_wrap_box" id="chat_id">
-                            <!--chat_box-->
-                            
-                            <div class="user_box">
-                                <div class="name open_chat2 left">Chat</div>
-                                <div class="closed2 right" id="icon">^ &nbsp;</div>
-                                <div class="clear"></div>
-                            </div>
-                            
-                            <div class="wrap_box2" style="display:none">
-                                <!--wrap_box-->
-                                <div class="message_content">
-                                    <div class="tile" id='chat-stream'></div>
-                            
-                                    <div class="field">
-                                        <label class="label">Type a message here:</label>
-                                        <div class="control">
-                                            <input class="input chat-input" placeholder="Type a message here..."></input>
-                                        </div>
-                                    </div>
-                                        
-                                    <div class="control">
-                                        <button class="button is-primary send-message">Send</button>
-                                    </div>
-                                </div>
-                                                                          
-                            </div> <!--wrap_box-->
-                        </div> <!--chat_box-->
-                    </div>
-                  
-                </div> <!--index_reload-->
+
             </div>
                
 

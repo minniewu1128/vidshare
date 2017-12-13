@@ -1,7 +1,54 @@
 var standby; 
+var collectiveStandby;
 var nextVidId;
 
+var socket = io.connect('/');
+// var socket = io.connect('//' + window.location.host,
+//  {  query: 'session_id=' + readCookie('express.sid') 
+//      ,'force new connection':true});
+var pportSocket = io.connect('/new');
+
+socket.on('connect', function(){
+    console.log('successfully connected')
+})
+
+
+// sockets are put in the same frontend file because need to access standby list global variable
+
+socket.on('users_connected', function(data){
+    $('#numUsers').text(data.number);
+});
+
+socket.on('resetStandby', function(data){
+    collectiveStandby = data;
+    console.log(collectiveStandby)
+    console.log('my standby was reset')
+    nextVidId = collectiveStandby[0].id;
+    console.log('nextVidID', nextVidId)
+})
+
+socket.on('message', function(data){
+    console.log('message received')
+
+    $('#chat-stream').append(
+        `<p>${data.message}</p>`
+    )
+});
 $(function(){
+
+    $('.send-message').click(function(){
+        var msg = $('.chat-input').val();
+        $('.chat-input').val('');
+        socket.emit('message', { message: msg})
+    })
+
+    //on confirming standby list, send standby list to server and recompile
+    $('#confirmStandby').click(function(){
+        socket.emit('resetStandby', standby)
+        //updating my own standby
+        console.log('standby successfully reset')
+    })
+
     // Adding a new playlist
     $('#addPlaylistButton').click(function(event){
         var inputName = $('#playlist-name').val();
@@ -85,27 +132,27 @@ $(function(){
                     resRender = resRender.concat(iterate)
                 }
                 resRender = resRender.concat(`</ol> </div>`)
-                    
+                           
                 // put partial stuff here
-                $('#standby-tab').html(resRender);
+                $('#standby-tab-list').html(resRender);
                 standby = res;
-                nextVidId = res[0].id;
-                console.log('nextVidID', nextVidId)
+                // nextVidId = res[0].id;
+                // console.log('nextVidID', nextVidId)
             }
-        })
-        
+        }); // close ajax
+    });
     
 
         // code to show what playlists there are
-        $.ajax({
-                url: `addVideo/5a303bde48e5713b1095ccb5/${this.id}/${this.title}`,
-                type: 'POST',
-                contentType: 'application/json',
-                success: function(res) {
-                    console.log("successfully added to playlist")
-                    // show message that video was added to playlist
-                }
-                });
+        // $.ajax({
+        //         url: `addVideo/5a303bde48e5713b1095ccb5/${this.id}/${this.title}`,
+        //         type: 'POST',
+        //         contentType: 'application/json',
+        //         success: function(res) {
+        //             console.log("successfully added to playlist")
+        //             // show message that video was added to playlist
+        //         }
+        //         });
     });
 
 function closeNewPlaylistModal(){
@@ -124,14 +171,14 @@ function getNextVideoIdFromSession(){
             success: function(res) {
                 console.log('got standby from session', res)
                 standby = res;
-                nextVidId = standby[0].id
+                nextVidId = collectiveStandby[0].id
                 console.log(nextVidId);
             }
 
     });
     
 }
-});
+
 
 var tag = document.createElement('script');
 console.log('script')
@@ -186,16 +233,18 @@ function onPlayerStateChange(e) {
     if(e.data === YT.PlayerState.CUED) {
         console.log('next video is now on cue')
         // remove current id from standby
-        standby = standby.slice(1);
-        console.log(standby)
+        if(collectiveStandby){
+            collectiveStandby = collectiveStandby.slice(1);
+            console.log('onCue',collectiveStandby)
+        }
         // re render partial for standby list
         var resRender = 
         `<div class = "showStandby container">
             <ol>`;
-        for (let i=0; i<standby.length; i++) {
+        for (let i=0; i<collectiveStandby.length; i++) {
         let iterate =  
-            `<li id=${standby[i].id}> 
-                ${standby[i].title}
+            `<li id=${collectiveStandby[i].id}> 
+                ${collectiveStandby[i].title}
             </li>`
         resRender = resRender.concat(iterate)
         }
@@ -221,6 +270,8 @@ function playNextVideo(player, vidId){
     })
   
 }
+
+
 
 
 

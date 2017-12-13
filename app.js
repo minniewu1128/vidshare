@@ -14,7 +14,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
 var passport = require('passport')
 var request = require('request');
-var YoutubePlayer = require('youtube-player');
+
+
+var flash = require('connect-flash');
+var cookieParser = require('cookie-parser');
 
 
 var connection_string = 'mongodb://minniew:Yu35016188!@ds111496.mlab.com:11496/usersdb'
@@ -34,14 +37,14 @@ var passportSocketIo = require('passport.socketio');
 var RedisStore = require('connect-redis')(session);
 
 
+
 // Set up socket.io
 var httpServer = http.Server(app);
 var sio = require('socket.io');
 var io = sio(httpServer);
 
 
-var flash = require('connect-flash');
-var cookieParser = require('cookie-parser');
+
 
 require('./config/passport').init(passport);
 
@@ -54,14 +57,25 @@ app.use(cookieParser());
 app.use(bodyParser());
 
 app.use(session({
-    key: 'connect.sid',
+    key: 'express.sid',
     store: sessionStore,
     secret:'mysecret'
 }))
+
 var sessionStore = new RedisStore({
     host: 'localhost',
     port: 50000,
 });
+
+// io.use(passportSocketIo.authorize({
+//     cookieParser: cookieParser,
+//     key: 'express.sid',                                                                                                                                    
+//     secret: 'mysecret',
+//     store: sessionStore,
+//     passport: passport,
+//     success: onAuthorizeSuccess, // optional callback on success
+//     fail: onAuthorizeFail,
+// }));
 // required for passport
 
 
@@ -111,6 +125,18 @@ app.use(function(req,res){
 
 // This is where normal app.get, app.put, etc middlewarew ould go
 
+function onAuthorizeSuccess(data,accept){
+    console.log('successful connection to socket.io');
+    // The accept-callback still allows 
+    accept(); // let the user through
+}
+
+function onAuthorizeFail(data, message, error, accept){
+    if(error) accept(new Error(message));
+    console.log('failed connection to socket.io', message);
+    accept(null,false);
+
+}
 
 
 
@@ -119,4 +145,6 @@ console.log('Listening on 50000');
 })
 
 var roomSockets = require('./routes/serverSocket.js');
-roomSockets.init(io, passportSocketIo, cookieParser, sessionStore, passport);
+roomSockets.init(io);
+
+

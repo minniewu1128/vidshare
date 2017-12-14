@@ -1,16 +1,26 @@
-<h1><%= list.name %></h1>
-<table class="table">
-    <tr>
-        <th>Title</th>
-    </tr>
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('header')%>
+    </head>
 
-    <% for(let i=0; i<list.plist.length; i++){ %>
-        <% let video = list.plist[i] %>
-        <tr>
-            <td><%= video.title%></td>
-            <td><button class='button addToStandbyButton' id="<%=video._id%>" title="<%=video.title%>">Add to Standby</button></td>
-        </tr>
+    <body>
+        <h1><%= list.name %></h1>
+        <table class="table">
+            <tr>
+                <th>Title</th>
+            </tr>
         
-    <% }%>
-    
-</table>
+            <% for(let i=0; i<list.plist.length; i++){ %>
+                <% let video = list.plist[i] %>
+                <tr>
+                    <td><%= video.title%></td>
+                </tr>
+                
+            <% }%>
+            
+        </table>
+        
+    </body>
+</html>
+

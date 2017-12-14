@@ -7,7 +7,8 @@
 
     <% lists.forEach(function(list) { %>
         <tr>
-            <td><a href="#" class="showPlaylistLink" id="<%=list._id%>"><%=list.name%></a></td>
+            <td><a href="/playlists/show/<%=list._id%>" class="showPlaylistLink" id="<%=list._id%>"><%=list.name%></a></td>
+            <td><button class='button is-small addToStandbyButton' id="<%=video.id.videoId%>" title="<%=video.snippet.title%>">Add to Standby</button></td> 
         </tr>
         
     <% })%>

@@ -5,15 +5,10 @@ var nextVidId;
 
 
 var socket = io.connect('/');
-// var socket = io.connect('//' + window.location.host,
-//  {  query: 'session_id=' + readCookie('express.sid') 
-//      ,'force new connection':true});
-var pportSocket = io.connect('/new');
 
 socket.on('connect', function(){
     console.log('successfully connected')
 })
-
 
 // sockets are put in the same frontend file because need to access standby list global variable
 
@@ -49,8 +44,29 @@ socket.on('message', function(data){
     )
 });
 
-
+// document ready
 $(function(){
+
+    // load user's current playlists into the dropdown
+    function initDropdown(){
+        $.ajax({
+            url: '/playlists',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function(res) {
+                var pDrop = ``;
+                for(var i=0; i<res.length; i++){
+                    pl = res[i]
+                    var addD = `<option id=${pl._id}>${pl.name}</option>`
+                    pDrop = pDrop.concat(addD);
+                }
+                $('select#selectPlaylist').html(pDrop);
+            }
+        }); //close ajax brack
+       
+    };
+    initDropdown();
+
     $('.addToStandbyButton').click(function(event){
          console.log("video id:", this.id, "video title:", this.title)
          $.ajax({
@@ -72,22 +88,13 @@ $(function(){
                  }
                  resRender = resRender.concat(`</ol>`)
                             
-                 // put partial stuff here
                  $('#standby-tab-list').html(resRender);
                  standby = res;
-                 // nextVidId = res[0].id;
-                 // console.log('nextVidID', nextVidId)
-             }
+                }
          }); // close ajax
      });
 
-     $('.addToPlaylistButton').click(function(event){
-        console.log("video id:", this.id)
-        // open modal
-        // temporarily save the video id and title that user wants to add
-
-        console.log('updated modal info', $('#choosePlaylistFormModal').title, $('#choosePlaylistFormModal').vidId)
-       
+     $('.addToPlaylistButton').click(function(event){      
         var vId = this.id;
         var vTitle = this.title;
         $('#addToPlaylistButton').click(function(event){     
@@ -104,22 +111,21 @@ $(function(){
                 contentType: 'application/json',
                 success: function(res) {         
                   console.log(`added video to playlist with id ${pId}`)
+                  $('#choosePlaylistFormModal').toggleClass('is-active')
                 }
             }) 
         })
-
         $('#choosePlaylistFormModal').toggleClass('is-active')
 
-        
      })
 
     
     
 
 
-function closeChoosePlaylistModal(){
-    $('#choosePlaylistFormModal').toggleClass('is-active');
-}    
+    function closeChoosePlaylistModal(){
+        $('#choosePlaylistFormModal').toggleClass('is-active');
+    }    
 
 
 
@@ -166,13 +172,14 @@ function closeChoosePlaylistModal(){
             success: function(res) {
                 console.log(res)
                 // build playlist frontend list
-                var pTab = `<ul>
-                `;
+                var pTab = `<table>`;
                 // build playlist frontend dropdown in modal
                 var pDrop = ``;
                 for(var i=0; i<res.length; i++){
                     pl = res[i]
-                    var addT = `<li><a href="#" class="showPlaylistLink" id=${pl._id}>${pl.name}</li>`
+                    var addT = `<tr>
+                                <td><a href="/playlists/show/${pl._id}" class="showPlaylistLink" id="${pl._id}">${pl.name} </td>
+                                </tr>`
                     pTab = pTab.concat(addT);
 
                     var addD = `<option id=${pl._id}>${pl.name}</option>`
@@ -180,7 +187,7 @@ function closeChoosePlaylistModal(){
                 }
 
 
-                pTab = pTab.concat('</ul>')             
+                pTab = pTab.concat('</table>')             
                 console.log(pTab)
                 $('#playlists-tab').html(pTab);
 

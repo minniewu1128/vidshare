@@ -34,67 +34,67 @@ See API for more information on insert:
 http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#insertOne
 */
 
-exports.create = function(data, callback){
-    console.log('4. Start insert in MongoModel');
-    mongoDB.collection('users').insertOne(
-        data, // object to be inserted
-        function(err, status) { // callback upon completion
-            if (err) doError (err);
-            console.log('5. Done with mongo insert operation in mongoModel')
-            // use the callback function supplied by the controller to pass 
-            // back true if successful else false
-            var success = (status.result.n ==1? true : false);
-            callback(success);
-            console.log('6. Done with the insert operation callback in mongoModel');
-        });
-    console.log('7. Done with insert function in MongoModel');
-}
+// exports.create = function(data, callback){
+//     console.log('4. Start insert in MongoModel');
+//     mongoDB.collection('users').insertOne(
+//         data, // object to be inserted
+//         function(err, status) { // callback upon completion
+//             if (err) doError (err);
+//             console.log('5. Done with mongo insert operation in mongoModel')
+//             // use the callback function supplied by the controller to pass 
+//             // back true if successful else false
+//             var success = (status.result.n ==1? true : false);
+//             callback(success);
+//             console.log('6. Done with the insert operation callback in mongoModel');
+//         });
+//     console.log('7. Done with insert function in MongoModel');
+// }
 
-// CRUD Retrieve -> Mongo Find 
-// @param {string} collection - The collection within the database
-// @param {object} query - The query object to search with
-// @param {function} callback - Function to call upon completion
+// // CRUD Retrieve -> Mongo Find 
+// // @param {string} collection - The collection within the database
+// // @param {object} query - The query object to search with
+// // @param {function} callback - Function to call upon completion
 
-exports.retrieve = function(query, callback) {
-    mongoDB.collection('users').find(query).toArray(function (err, docs){
-        if (err) doError(err);
-        // docs are MongoDB documents, returned as an array of Javascript objects
-        // Use the callbacks provided by the controller to send backc the docs
-        callback(docs);
-    });
-}
+// exports.retrieve = function(query, callback) {
+//     mongoDB.collection('users').find(query).toArray(function (err, docs){
+//         if (err) doError(err);
+//         // docs are MongoDB documents, returned as an array of Javascript objects
+//         // Use the callbacks provided by the controller to send backc the docs
+//         callback(docs);
+//     });
+// }
 
-// CRUD Update -> Mongo updateMany
-// @param {string} collection - The collection within the database
-// @param {object} filter - The MongoDB filter
-// @param {object} update - The update operation to perform
-// @param {function} callback - Function to call upon completion
+// // CRUD Update -> Mongo updateMany
+// // @param {string} collection - The collection within the database
+// // @param {object} filter - The MongoDB filter
+// // @param {object} update - The update operation to perform
+// // @param {function} callback - Function to call upon completion
 
-exports.update = function(filter, update, callback){
-    console.log('4. start update in MongoModel')
-    mongoDB
-        .collection('users')
-        .updateMany(
-            filter,
-            update,
-            {upsert: true},
+// exports.update = function(filter, update, callback){
+//     console.log('4. start update in MongoModel')
+//     mongoDB
+//         .collection('users')
+//         .updateMany(
+//             filter,
+//             update,
+//             {upsert: true},
 
-            function(err,status){
-                if (err) doError(err);
-                callback('Modified ' + status.modifiedCount + ' and added' + status.upsertedCount+ " documents");
+//             function(err,status){
+//                 if (err) doError(err);
+//                 callback('Modified ' + status.modifiedCount + ' and added' + status.upsertedCount+ " documents");
 
-            });
-}
+//             });
+// }
 
-// CRUD Delete -> Mongo deleteOne 
-exports.delete = function(filter, callback){
-    mongoDB.collection('users').deleteOne(filter, function(err, status){
-        if (err) doError(err);
-        callback('Deleted one object from collection')
-    })
-}
+// // CRUD Delete -> Mongo deleteOne 
+// exports.delete = function(filter, callback){
+//     mongoDB.collection('users').deleteOne(filter, function(err, status){
+//         if (err) doError(err);
+//         callback('Deleted one object from collection')
+//     })
+// }
 
-var doError = function(e) {
-    console.log('ERROR ' + e);
-    throw new Error(e);
-}
+// var doError = function(e) {
+//     console.log('ERROR ' + e);
+//     throw new Error(e);
+// }

@@ -16,30 +16,23 @@ var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 
 
-var connection_string = 'mongodb://minniew:Yu35016188!@ds111496.mlab.com:11496/usersdb'
+// var connection_string = 'mongodb://minniew:Yu35016188!@ds111496.mlab.com:11496/usersdb'
 
-mongoose.connect(connection_string);
+// mongoose.connect(connection_string);
 
 
 // configuration ===============================================================
 // mongoose.connect(configDB.url); // connect to our database
-
-// require('config/passport')(passport); // pass passport for configuration
-
 
 
 var session = require('express-session');
 var passportSocketIo = require('passport.socketio');
 var RedisStore = require('connect-redis')(session);
 
-
-
 // Set up socket.io
 var httpServer = http.Server(app);
 var sio = require('socket.io');
 var io = sio(httpServer);
-
-
 
 
 require('./config/passport').init(passport);
@@ -81,12 +74,11 @@ app.use(express.static(__dirname + '/public'));
 
 // Set the views directory
 app.set('views', __dirname + '/views');
+
 // Define the view (templating) engine
 app.set('view engine', 'ejs');
 
 app.use(morgan('tiny'));
-
-
 
 // parse application/x-www-form-urlencoded, with extended qs library
 app.use(bodyParser.urlencoded({extended: true}));
@@ -122,8 +114,6 @@ function onAuthorizeFail(data, message, error, accept){
     accept(null,false);
 
 }
-
-
 
 httpServer.listen(50000, function() {
 console.log('Listening on 50000');

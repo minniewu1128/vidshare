@@ -27,12 +27,21 @@ exports.init = function (app, passport) {
         })
     })
 
+    // delete playlists by user
+    app.delete('/playlists/', isLoggedIn, function(req,res){
+        Playlist.find({'createdBy': req.user._id}).remove().exec(function(err, data){
+            if(err) {console.log('could not delete')}''
+        console.log('deleted');
+        });
+        res.send({response: 'true'})
+    });
+
+
     // getting form to create new playlist
     app.get('/playlists/new', isLoggedIn, function(req,res){
         res.render('partials/newPlaylist', {message: req.flash('newPlaylistMessage')})
     });
 
- 
 
     // show the videos in a specific playlist
     app.get('/playlists/show/:id', isLoggedIn, function(req,res){
@@ -70,7 +79,7 @@ exports.init = function (app, passport) {
     })
    
     // adding new video to a specific playlist
-    app.post('/addVideo/:playlistId/:videoId/:videoTitle?', isLoggedIn, function(req,res){
+    app.post('/addVideo/:playlistId/:videoId/:videoTitle', isLoggedIn, function(req,res){
         console.log('route')
         var video;
         console.log("playlist id", req.params.playlistId, "video id", req.params.videoId)

@@ -99,6 +99,7 @@ $(function(){
         var vTitle = this.title;
         $('#addToPlaylistButton').click(function(event){     
             // selecting playlist id to add
+            console.log('video id', vId, 'video Title:', vTitle)
             var select = $('select#selectPlaylist')
             var selectedIndex = select[0].options.selectedIndex;
             var pId = select[0][selectedIndex].id;
@@ -118,10 +119,6 @@ $(function(){
         $('#choosePlaylistFormModal').toggleClass('is-active')
 
      })
-
-    
-    
-
 
     function closeChoosePlaylistModal(){
         $('#choosePlaylistFormModal').toggleClass('is-active');
@@ -162,6 +159,17 @@ $(function(){
         
     })
 
+    // deleting playlists
+    $('#deletePlaylists').click(function(e){
+        $.ajax({
+            url:'/playlists',
+            type: 'DELETE',
+            success: function(res) {
+                alert('deleted playlists')
+            }
+        })
+        e.preventDefault();
+    })
 
     // Getting playlists
     $('#getPlaylistButton').click(function(event){

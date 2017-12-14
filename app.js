@@ -8,13 +8,9 @@ var fs = require('fs')
 var readline = require('readline');
 var path = require('path');
 var bodyParser = require('body-parser');
-// var superagent = require('superagent');
-// var google = require('googleapis');
-// var googleAuth = require('google-auth-library');
+
 var mongoose = require('mongoose')
 var passport = require('passport')
-var request = require('request');
-
 
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
@@ -66,17 +62,6 @@ var sessionStore = new RedisStore({
     host: 'localhost',
     port: 50000,
 });
-
-// io.use(passportSocketIo.authorize({
-//     cookieParser: cookieParser,
-//     key: 'express.sid',                                                                                                                                    
-//     secret: 'mysecret',
-//     store: sessionStore,
-//     passport: passport,
-//     success: onAuthorizeSuccess, // optional callback on success
-//     fail: onAuthorizeFail,
-// }));
-// required for passport
 
 
 app.use(passport.initialize());

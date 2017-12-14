@@ -68,8 +68,7 @@ exports.init = function (app, passport) {
         console.log('successfully saved')
    
     })
-
-    
+   
     // adding new video to a specific playlist
     app.post('/addVideo/:playlistId/:videoId/:videoTitle?', isLoggedIn, function(req,res){
         console.log('route')

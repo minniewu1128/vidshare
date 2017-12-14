@@ -22,7 +22,8 @@ exports.init = function (app, passport) {
                 console.log("error", err)
             }
             console.log("playlist", list);
-            res.render('partials/playlistsIndex', {lists: list, user: req.user})
+            res.json(list);
+            // res.render('partials/playlistsIndex', {lists: list, user: req.user})
         })
     })
 
@@ -30,6 +31,8 @@ exports.init = function (app, passport) {
     app.get('/playlists/new', isLoggedIn, function(req,res){
         res.render('partials/newPlaylist', {message: req.flash('newPlaylistMessage')})
     });
+
+ 
 
     // show the videos in a specific playlist
     app.get('/playlists/show/:id', isLoggedIn, function(req,res){

@@ -1,0 +1,32 @@
+<!-- modal to add to playlist-->
+<div class="modal" id="choosePlaylistFormModal">
+        <div class='modal-background'></div>
+        <div class='modal-card'>
+            <header class="modal-card-head">
+                <p class="modal-card-title">Choose a Playlist</p>
+                <button class="delete" aria-label="close" onclick="closeChoosePlaylistModal()"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">Select Playlist:</label>
+                        <div class="control">
+                            <div class="select">
+                            <select id="selectPlaylist">
+
+                            </select>
+                            </div>
+                        </div>
+                </div>
+
+                    
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button" id="addToPlaylistButton" >Add</button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-text">Cancel</button>
+                        </div>
+                    </div>            
+            </section>
+        </div>
+    </div>

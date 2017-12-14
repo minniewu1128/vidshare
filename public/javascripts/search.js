@@ -53,12 +53,13 @@ $(function(){
             url: "/searchQuery/" + q,
             type: 'GET',
             success: function(res) {
+                console.log('search results', res)
                 var r = ``;
                 $('#video-search-bar').val('');
                 $('#search-tab').html(res);
                
                 
             }
-        })
-    })
+        });
+    });
 })

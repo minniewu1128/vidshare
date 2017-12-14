@@ -2,6 +2,8 @@ var standby;
 var collectiveStandby;
 var nextVidId;
 
+
+
 var socket = io.connect('/');
 // var socket = io.connect('//' + window.location.host,
 //  {  query: 'session_id=' + readCookie('express.sid') 
@@ -46,7 +48,81 @@ socket.on('message', function(data){
         `<p>${data.message}</p>`
     )
 });
+
+
 $(function(){
+    $('.addToStandbyButton').click(function(event){
+         console.log("video id:", this.id, "video title:", this.title)
+         $.ajax({
+             url: `/standby/add/${this.id}/${this.title}`,
+             type: 'POST',
+             contentType: 'application/json',
+             success: function(res) {
+                 // add to session
+                 // res is array of {id: id, title: title} pairs
+                 console.log('sucessfully added to standby', res)
+                 var resRender = 
+                     "<ol>"
+                 for (let i=0; i<res.length; i++) {
+                     let iterate =  
+                         `<li id=${res[i].id}> 
+                             ${res[i].title}
+                         </li>`
+                     resRender = resRender.concat(iterate)
+                 }
+                 resRender = resRender.concat(`</ol>`)
+                            
+                 // put partial stuff here
+                 $('#standby-tab-list').html(resRender);
+                 standby = res;
+                 // nextVidId = res[0].id;
+                 // console.log('nextVidID', nextVidId)
+             }
+         }); // close ajax
+     });
+
+     $('.addToPlaylistButton').click(function(event){
+        console.log("video id:", this.id)
+        // open modal
+        // temporarily save the video id and title that user wants to add
+
+        console.log('updated modal info', $('#choosePlaylistFormModal').title, $('#choosePlaylistFormModal').vidId)
+       
+        var vId = this.id;
+        var vTitle = this.title;
+        $('#addToPlaylistButton').click(function(event){     
+            // selecting playlist id to add
+            var select = $('select#selectPlaylist')
+            var selectedIndex = select[0].options.selectedIndex;
+            var pId = select[0][selectedIndex].id;
+            console.log('selected',select)
+            console.log('selected ID', pId)
+
+            $.ajax({
+                url: `addVideo/${pId}/${vId}/${vTitle}`,
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(res) {         
+                  console.log(`added video to playlist with id ${pId}`)
+                }
+            }) 
+        })
+
+        $('#choosePlaylistFormModal').toggleClass('is-active')
+
+        
+     })
+
+    
+    
+
+
+function closeChoosePlaylistModal(){
+    $('#choosePlaylistFormModal').toggleClass('is-active');
+}    
+
+
+
 
     $('.send-message').click(function(){
         var msg = $('.chat-input').val();
@@ -73,11 +149,13 @@ $(function(){
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function(res) {
+                
                 $('#newPlaylistFormModal').toggleClass("is-active")
             }
         })
         
     })
+
 
     // Getting playlists
     $('#getPlaylistButton').click(function(event){
@@ -86,8 +164,28 @@ $(function(){
             type: 'GET',
             contentType: 'application/json',
             success: function(res) {
-                console.log("playlist html", res)
-                $('#playlists-tab').html(res);
+                console.log(res)
+                // build playlist frontend list
+                var pTab = `<ul>
+                `;
+                // build playlist frontend dropdown in modal
+                var pDrop = ``;
+                for(var i=0; i<res.length; i++){
+                    pl = res[i]
+                    var addT = `<li><a href="#" class="showPlaylistLink" id=${pl._id}>${pl.name}</li>`
+                    pTab = pTab.concat(addT);
+
+                    var addD = `<option id=${pl._id}>${pl.name}</option>`
+                    pDrop = pDrop.concat(addD);
+                }
+
+
+                pTab = pTab.concat('</ul>')             
+                console.log(pTab)
+                $('#playlists-tab').html(pTab);
+
+            
+                $('select#selectPlaylist').html(pDrop)
                 
             }
         })
@@ -123,47 +221,6 @@ $(function(){
         
     })
 
-    $('.addToStandbyButton').click(function(event){
-        console.log("video id:", this.id, "video title:", this.title)
-        $.ajax({
-            url: `/standby/add/${this.id}/${this.title}`,
-            type: 'POST',
-            contentType: 'application/json',
-            success: function(res) {
-                // add to session
-                // res is array of {id: id, title: title} pairs
-                console.log('sucessfully added to standby', res)
-                var resRender = 
-                    "<ol>"
-                for (let i=0; i<res.length; i++) {
-                    let iterate =  
-                        `<li id=${res[i].id}> 
-                            ${res[i].title}
-                        </li>`
-                    resRender = resRender.concat(iterate)
-                }
-                resRender = resRender.concat(`</ol>`)
-                           
-                // put partial stuff here
-                $('#standby-tab-list').html(resRender);
-                standby = res;
-                // nextVidId = res[0].id;
-                // console.log('nextVidID', nextVidId)
-            }
-        }); // close ajax
-    });
-    
-
-        // code to show what playlists there are
-        // $.ajax({
-        //         url: `addVideo/5a303bde48e5713b1095ccb5/${this.id}/${this.title}`,
-        //         type: 'POST',
-        //         contentType: 'application/json',
-        //         success: function(res) {
-        //             console.log("successfully added to playlist")
-        //             // show message that video was added to playlist
-        //         }
-        //         });
     });
 
 function closeNewPlaylistModal(){
@@ -281,8 +338,6 @@ function playNextVideo(player, vidId){
     })
   
 }
-
-
 
 
 
